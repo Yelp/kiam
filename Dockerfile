@@ -17,5 +17,10 @@ COPY Makefile Makefile
 RUN make bin/kiam-linux-amd64
 
 FROM ubuntu:bionic
+RUN apt-get update
+RUN DEBIAN_FRONTEND=non-interactive apt-get install \
+    --yes --no-install-recommends \
+    mtr-tiny dnsutils net-tools netcat iputils-ping && \
+    apt-get clean
 COPY --from=build /workspace/bin/kiam-linux-amd64 /kiam
 CMD []
